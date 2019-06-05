@@ -1,4 +1,7 @@
 <div class="wedocs-sidebar wedocs-hide-mobile">
+    <p>Search</p>
+    <input type='text'/>
+    <p></p>
     <?php
     $ancestors = array();
     $root      = $parent = false;

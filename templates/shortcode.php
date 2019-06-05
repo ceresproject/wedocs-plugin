@@ -1,5 +1,4 @@
 <?php if ( $docs ) : ?>
-
 <div class="wedocs-shortcode-wrap">
     <ul class="wedocs-docs-list col-<?php echo $col; ?>">
 

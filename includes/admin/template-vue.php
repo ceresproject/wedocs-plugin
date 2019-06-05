@@ -1,6 +1,6 @@
 <div class="wrap" id="wedocs-app">
 
-    <h1><?php _e( 'Documentations', 'wedocs' ); ?> <a class="page-title-action" href="#" v-on:click.prevent="addDoc"><?php _e( 'Add Doc', 'wedocs' ); ?></a></h1>
+    <h1><?php _e( 'Documentations', 'wedocs' ); ?> <a class="page-title-action" href="#" v-on:click.prevent="addDoc"><?php _e( 'Add Doc', 'wedocs' ); ?></a> <a class="page-title-action" href="#" >Import Doc</a></h1>
 
     <!-- <pre>{{ $data | json }}</pre> -->
 

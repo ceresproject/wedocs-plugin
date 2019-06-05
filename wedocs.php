@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: weDocs
+Plugin Name: weDocs[M]
 Plugin URI: http://wedevs.com/
 Description: A documentation plugin for WordPress
 Version: 1.4.1
-Author: Tareq Hasan
+Author: Tianqi Qin
 Author URI: https://tareq.co/
 License: GPL2
 Text Domain: wedocs

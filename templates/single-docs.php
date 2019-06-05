@@ -25,23 +25,46 @@ get_header(); ?>
         <div class="wedocs-single-wrap">
 
             <?php if ( ! $skip_sidebar ) { ?>
-
                 <?php wedocs_get_template_part( 'docs', 'sidebar' ); ?>
-
             <?php } ?>
 
             <div class="wedocs-single-content">
                 <?php wedocs_breadcrumbs(); ?>
-
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope itemtype="http://schema.org/Article">
                     <header class="entry-header">
+                        <form method='get'>
+                        <input class="page-title-action" name="export_btn" type="submit" value="Export Doc"/>
+                        </form>
                         <?php the_title( '<h1 class="entry-title" itemprop="headline">', '</h1>' ); ?>
+                        <?php 
+                        function save_content_to_folder() {
+                            echo "start bath";
+                            $title = the_title( '#', '' );
+                            $body = the_content();
+                            $date = date("Y-m-d");
 
+                            $content = $title."------". "  <br>". $body. "  <br>".$date. "  <br>";
+
+                            $filename = the_title( '', '' ).".md";
+                            //file_put_contents($filename)
+                            /*if (php_uname('s') == "Darwin") {
+                                $filename = "/Users/".get_current_user()."/Downloads/".$filename;
+                            } elseif (php_uname('s') == "Darwin") {
+                                $filename = "C:\\Users\\".get_current_user()."\\Downloads\\".$filename;
+                            }*/
+                            file_put_contents($filename, $content);
+                            echo "Save success to path: ".$filename;
+                        };   
+                        if ($_GET['export_btn']){
+                            save_content_to_folder();
+                        }   
+                        //echo get_current_user();             
+                        ?>
                         <?php if ( wedocs_get_option( 'print', 'wedocs_settings', 'on' ) == 'on' ): ?>
                             <a href="#" class="wedocs-print-article wedocs-hide-print wedocs-hide-mobile" title="<?php echo esc_attr( __( 'Print this article', 'wedocs' ) ); ?>"><i class="wedocs-icon wedocs-icon-print"></i></a>
                         <?php endif; ?>
                     </header><!-- .entry-header -->
-
+                
                     <div class="entry-content" itemprop="articleBody">
                         <?php
                             the_content( sprintf(
@@ -75,6 +98,7 @@ get_header(); ?>
                                 );
                             }
                         ?>
+
                     </div><!-- .entry-content -->
 
                     <footer class="entry-footer wedocs-entry-footer">
@@ -84,7 +108,6 @@ get_header(); ?>
                                 <?php printf( '%s <a id="wedocs-stuck-modal" href="%s">%s</a>', __( 'Still stuck?', 'wedocs' ), '#', __( 'How can we help?', 'wedocs' ) ); ?>
                             </span>
                         <?php endif; ?>
-
                         <div class="wedocs-article-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
                             <meta itemprop="name" content="<?php echo get_the_author(); ?>" />
                             <meta itemprop="url" content="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" />
@@ -120,3 +143,4 @@ get_header(); ?>
     ?>
 
 <?php get_footer(); ?>
+
