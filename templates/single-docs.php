@@ -32,34 +32,27 @@ get_header(); ?>
                 <?php wedocs_breadcrumbs(); ?>
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope itemtype="http://schema.org/Article">
                     <header class="entry-header">
-                        <form method='get'>
-                        <input class="page-title-action" name="export_btn" type="submit" value="Export Doc"/>
-                        </form>
-                        <?php the_title( '<h1 class="entry-title" itemprop="headline">', '</h1>' ); ?>
                         <?php 
+
+                        // feature save the doc to directory
                         function save_content_to_folder() {
-                            echo "start bath";
-                            $title = the_title( '#', '' );
-                            $body = the_content();
-                            $date = date("Y-m-d");
+                            $title = the_title( '', '' ,false);
+                            $body = preg_replace("/<!--[^\!\[]*?(?<!\/\/)-->/","",get_the_content());
+                            $body = preg_replace("/\<p\>/","<br>",$body);
+                            $body = preg_replace("/\<\/p\>/","<br>",$body);
+                            $body = preg_replace("/\s+/", " ", $body); 
+                            $body = str_replace("'", "‘", $body); 
+                            $body = trim($body);
+                            $filename = ((string)$title).".md";
 
-                            $content = $title."------". "  <br>". $body. "  <br>".$date. "  <br>";
-
-                            $filename = the_title( '', '' ).".md";
-                            //file_put_contents($filename)
-                            /*if (php_uname('s') == "Darwin") {
-                                $filename = "/Users/".get_current_user()."/Downloads/".$filename;
-                            } elseif (php_uname('s') == "Darwin") {
-                                $filename = "C:\\Users\\".get_current_user()."\\Downloads\\".$filename;
-                            }*/
-                            file_put_contents($filename, $content);
-                            echo "Save success to path: ".$filename;
-                        };   
-                        if ($_GET['export_btn']){
-                            save_content_to_folder();
-                        }   
-                        //echo get_current_user();             
+                            return home_url()."/wp-content/plugins/wedocs-plugin/download.php?content=".$body."&title=".$title."&filename=".$filename;
+                        };            
                         ?>
+
+                        <button onclick="window.open('<?php echo save_content_to_folder()?>','_blank')">Export this doc</button>
+
+                        <?php the_title( '<h1 class="entry-title" itemprop="headline">', '</h1>' ); ?>
+
                         <?php if ( wedocs_get_option( 'print', 'wedocs_settings', 'on' ) == 'on' ): ?>
                             <a href="#" class="wedocs-print-article wedocs-hide-print wedocs-hide-mobile" title="<?php echo esc_attr( __( 'Print this article', 'wedocs' ) ); ?>"><i class="wedocs-icon wedocs-icon-print"></i></a>
                         <?php endif; ?>
