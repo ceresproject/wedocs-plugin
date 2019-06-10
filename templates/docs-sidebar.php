@@ -1,7 +1,5 @@
-<div class="wedocs-sidebar wedocs-hide-mobile">
-    <p>Search</p>
-    <input type='text'/>
-    <p></p>
+<div style="margin:10px;" class="wedocs-sidebar wedocs-hide-mobile">
+
     <?php
     $ancestors = array();
     $root      = $parent = false;

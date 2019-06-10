@@ -35,7 +35,8 @@ new Vue({
     data: {
         editurl: '',
         viewurl: '',
-        docs: []
+        docs: [],
+        select: ''
     },
 
     mounted: function() {
@@ -62,6 +63,52 @@ new Vue({
 
         onError: function(error) {
             alert(error);
+        },
+        doCopy: function () {
+            console.log('window.getSelection().toString()')
+          },
+        importArticle: function(section, event) {
+            var parentEvent = event;
+            console.log(section)
+            let content = '';
+            let inputValue = null;
+            let file = event.target.files[0];
+            const reader = new FileReader();
+            reader.fileName = file.name
+            reader.onload = e => {
+                content = e.target.result;
+                inputValue = e.target.fileName;
+                console.log(inputValue, content);
+    
+                if ( inputValue ) {
+                    wp.ajax.send( {
+                        data: {
+                            action: 'wedocs_create_doc',
+                            title: inputValue + new Date(),
+                            parent: section.post.id,
+                            status: 'draft',
+                            content: content,
+                            order: section.child.length,
+                            _wpnonce: weDocs.nonce
+                        },
+                        success: function(res) {
+                            section.child.push( res );
+    
+                            var articles = jQuery( parentEvent.target ).closest('.section-title').next();
+    
+                            if ( articles.hasClass('collapsed') ) {
+                                articles.removeClass('collapsed');
+                            }
+                        },
+                        error: function(error) {
+                            alert( error );
+                        }
+                    });
+                }
+            }
+            reader.readAsText(file, 'GB2312');
+            
+
         },
 
         addDoc: function() {
@@ -164,6 +211,7 @@ new Vue({
 
         addArticle: function(section, event) {
             var parentEvent = event;
+            console.log(section)
 
             swal({
                 title: weDocs.enter_doc_title,

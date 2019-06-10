@@ -1,6 +1,6 @@
 <div class="wrap" id="wedocs-app">
 
-    <h1><?php _e( 'Documentations', 'wedocs' ); ?> <a class="page-title-action" href="#" v-on:click.prevent="addDoc"><?php _e( 'Add Doc', 'wedocs' ); ?></a> <a class="page-title-action" href="#" >Import Doc</a></h1>
+    <h1><?php _e( 'Documentations', 'wedocs' ); ?> <a class="page-title-action" href="#" v-on:click.prevent="addDoc"><?php _e( 'Add Doc', 'wedocs' ); ?></a></h1>
 
     <!-- <pre>{{ $data | json }}</pre> -->
 
@@ -31,6 +31,10 @@
                                 <a target="_blank" :href="viewurl + section.post.id" title="<?php esc_attr_e( 'Preview the section', 'wedocs' ); ?>"><span class="dashicons dashicons-external"></span></a>
                                 <span class="wedocs-btn-remove" v-if="section.post.caps.delete" v-on:click="removeSection(index, doc.child)" title="<?php esc_attr_e( 'Delete this section', 'wedocs' ); ?>"><span class="dashicons dashicons-trash"></span></span>
                                 <span class="add-article" v-on:click="addArticle(section,$event)" title="<?php esc_attr_e( 'Add a new article', 'wedocs' ); ?>"><span class="dashicons dashicons-plus-alt"></span></span>
+                                <label :for="'import_input'+section.post.id">
+                                <a class="">Import</a>
+                                </label>
+                                <input v-show="false" :id="'import_input'+section.post.id" v-on:change="importArticle(section,$event)" type="file"/>
                             </span>
                         </span>
 

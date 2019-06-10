@@ -37,6 +37,7 @@ class WeDocs_Ajax {
         $status = isset( $_POST['status'] ) ? sanitize_text_field( $_POST['status'] ) : 'draft';
         $parent = isset( $_POST['parent'] ) ? absint( $_POST['parent'] ) : 0;
         $order  = isset( $_POST['order'] ) ? absint( $_POST['order'] ) : 0;
+        $content  = isset( $_POST['content'] ) ? $_POST['content'] : '';
 
         $status = 'publish';
         $post_type_object = get_post_type_object( 'docs' );
@@ -51,6 +52,7 @@ class WeDocs_Ajax {
             'post_status' => $status,
             'post_parent' => $parent,
             'post_author' => get_current_user_id(),
+            'post_content'=> $content,
             'menu_order'  => $order
         ) );
 

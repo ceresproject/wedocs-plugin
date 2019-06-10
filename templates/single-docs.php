@@ -58,7 +58,7 @@ get_header(); ?>
                         <?php endif; ?>
                     </header><!-- .entry-header -->
                 
-                    <div class="entry-content" itemprop="articleBody">
+                    <div class="entry-content" id="mainBody" onmouseup="SelectText()" itemprop="articleBody">
                         <?php
                             the_content( sprintf(
                                 /* translators: %s: Name of current post. */
@@ -91,7 +91,28 @@ get_header(); ?>
                                 );
                             }
                         ?>
-
+                        <script>
+                            function replaceThis(s) {
+                                document.getElementById("mainBody").innerHTML = document.getElementById("mainBody").innerHTML.replace(s, "<span style='background-color:yellow'>" +s + "</span>")
+                            }
+                            function SelectText()
+                            {
+                                try{
+                                        var selecter=window.getSelection().toString();
+                                        if(selecter!=null&&selecter.trim()!=""){
+                                            console.log(selecter);
+                                            replaceThis(selecter)
+                                        }
+                                }catch(err){
+                                        var selecter=document.getSelection(); // document.selection.createRange()
+                                        var s=selecter.text;
+                                        if(s!=null&&s.trim()!=""){
+                                            console.log(s);
+                                            replaceThis(s)
+                                        }
+                                }
+                            }
+                        </script>
                     </div><!-- .entry-content -->
 
                     <footer class="entry-footer wedocs-entry-footer">
